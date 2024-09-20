@@ -22,3 +22,17 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# Archivos de configuración de NetBeans
+/nbproject/private/
+/nbproject/build-impl.xml
+/nbproject/genfiles.properties
+/nbproject/project.properties
+/nbproject/project.xml
+
+# Archivos de configuración de IntelliJ IDEA
+/.idea/
+/*.iml
+
+# Archivos de configuración de Visual Studio Code
+/.vscode/
