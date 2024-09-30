@@ -19,17 +19,19 @@ package modelo;
  */
 public class Cancion {
     // el id toca pensarlo
+    // podriamos crear un metodo para agregar Canciones y se pide el id de la cancion
     int id;
     String titulo;
     String artista;
     Cancion siguiente;
     
-    public Cancion(int id, String titulo, String artista){
+    public Cancion(int id){
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
         this.siguiente = null;
     }
-    
+
+   
     
 }
