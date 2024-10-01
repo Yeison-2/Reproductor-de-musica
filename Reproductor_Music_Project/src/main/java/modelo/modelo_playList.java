@@ -5,6 +5,8 @@
  */
 package modelo;
 
+import java.util.Random;
+
 /**
  *
  * @author Felipe
@@ -32,8 +34,9 @@ public class modelo_playList {
     }
 
     // metodo para agregar canciones
-    public void agregarCancion(int id) {
-        Cancion nuevoNodo = new Cancion(id);
+    public void agregarCancion(String artista, String titulo) {
+        int id = crearID();
+        Cancion nuevoNodo = new Cancion(id, artista, titulo);
         if (playListVacio()) {
             top = nuevoNodo;
         } else {
@@ -42,33 +45,48 @@ public class modelo_playList {
         }
         size++;
     }
-//Metodo para eliminar canciones hh
 
-    public int eliminarCancion(int id) {
+    // Método para eliminar canciones
+    public boolean eliminarCancion(int id) {
         if (playListVacio()) {
             throw new RuntimeException("La playlist se encuentra vacia");
         }
-        int num = top.id;
-        String name = top.artista;
-        String title = top.titulo;
-        return ;
-
+        Cancion actual = top;
+        Cancion anterior = null;
+        while (actual != null) {
+            if (actual.id == id) {
+                if (anterior == null) {
+                    top = actual.siguiente;
+                } else {
+                    anterior.siguiente = actual.siguiente;
+                }
+                size--;
+                return true;
+            }
+            anterior = actual;
+            actual = actual.siguiente;
+        }
+        return false;
     }
-    //Metodo para mostrar la playList
 
+    // Método para mostrar la playlist
     public void mostrarPlayList() {
-        Cancion nuevoNodo = new Cancion(size);
         if (playListVacio()) {
-            System.out.println("La playList esta vacia");
+            System.out.println("La playlist esta vacia");
             return;
         } else {
             Cancion actual = top;
             while (actual != null) {
-                System.out.println(actual.id);
+                System.out.println(actual.id + " - " + actual.artista + " - " + actual.titulo);
                 actual = actual.siguiente;
-
             }
         }
+    }
+    private int idCounter = 0;
+
+    // Método para generar un ID único
+    public int crearID() {
+        return idCounter++;
     }
 
 }

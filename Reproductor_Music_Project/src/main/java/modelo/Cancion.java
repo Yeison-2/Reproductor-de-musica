@@ -24,13 +24,16 @@ public class Cancion {
     String titulo;
     String artista;
     Cancion siguiente;
-    
-    public Cancion(int id){
+
+    public Cancion(int id, String titulo, String artista) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
         this.siguiente = null;
     }
+    
+   
+    
 
    
     
