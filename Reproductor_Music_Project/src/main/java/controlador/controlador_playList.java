@@ -24,7 +24,11 @@ public class controlador_playList {
     }
 
     
-    public void ejecutarAccion(int opcion) {
+    public void ejecutarAccion() {
+        boolean continuar=true;
+        while (continuar) {            
+            int opcion =view.mostrarMenu();
+        
         switch (opcion) {
             case 1:
                 agregarCancion();
@@ -42,6 +46,7 @@ public class controlador_playList {
                 System.out.println("Opción no válida");
                 break;
         }
+    }
     }
 
     private void agregarCancion() {
