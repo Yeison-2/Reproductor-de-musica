@@ -25,7 +25,7 @@ public class Reproductor_Music_Project {
          modelo_playList modelo = new modelo_playList();
         vista_playList view = new vista_playList();
         controlador_playList con = new controlador_playList( modelo, view);
-        con.ejecutarAccion();
+       // con.ejecutarAccion();
 /*
          si no esta comenatado este llamado con.ejecutarAccion(); solo
         se ejecutara lo que se muestre por consola
