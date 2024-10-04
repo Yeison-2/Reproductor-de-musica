@@ -26,8 +26,8 @@ public class vista_playList {
         System.out.println("n/ Menu de la Lista");
         System.out.println("1. Agregar canciones a la lista de Reproduccion");
         System.out.println("2. Eliminar canciones de la lista de Reproduccion");
-        System.out.println("4. Lista completa de reproduccion");
-        System.out.println("5. Salir");
+        System.out.println("3. Lista completa de reproduccion");
+        System.out.println("4. Salir");
         System.out.println("ingrese una opcion valida");
         return sc.nextInt();
     }

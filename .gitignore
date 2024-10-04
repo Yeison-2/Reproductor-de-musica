@@ -36,3 +36,4 @@ replay_pid*
 
 # Archivos de configuración de Visual Studio Code
 /.vscode/
+/Reproductor_Music_Project/target/
