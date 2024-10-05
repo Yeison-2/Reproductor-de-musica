@@ -317,7 +317,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
      * @param error String
      */
     public void mostrartraMensaje(String error) {
-        JOptionPane.showMessageDialog(this, error, "Erro", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, error, "Mensaje", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
