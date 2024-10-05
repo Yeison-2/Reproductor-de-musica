@@ -10,6 +10,7 @@ import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoDeepOceanIJTheme;
 import com.formdev.flatlaf.intellijthemes.FlatGradiantoMidnightBlueIJTheme;
 import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighterIJTheme;
+import controlador.Controlador_ReproductorMusic;
 import vista.Vista_ReproductorMusica;
 import controlador.controlador_playList;
 import modelo.modelo_playList;
@@ -51,7 +52,7 @@ public class Reproductor_Music_Project {
         FlatArcIJTheme.setup(); // tema claro
         
         Vista_ReproductorMusica view1 = new Vista_ReproductorMusica();
-        view1.setVisible(true);
+        
         
         
         
@@ -60,5 +61,9 @@ public class Reproductor_Music_Project {
         //crear objeto de la vista
         //crear objeto del controlador
         //como es con formularios se hace view.setViseble True
+        
+        
+        Controlador_ReproductorMusic ctrl = new Controlador_ReproductorMusic(modelo, view1);
+        ctrl.iniciar();
     }
 }

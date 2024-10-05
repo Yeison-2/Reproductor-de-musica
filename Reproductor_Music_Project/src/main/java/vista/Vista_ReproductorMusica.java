@@ -10,8 +10,17 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.plaf.FileChooserUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -26,6 +35,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         this.setTitle("Reproductor de musica");
         this.setSize(new Dimension(1021, 650));
         configurarPlaceholder(JTF_BuscaCanciones, "Buscar Cancion");
+        //verContenidoTxt();
 
     }
 
@@ -40,7 +50,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_anterior = new javax.swing.JButton();
         JB_siguiente = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel3 = new javax.swing.JPanel();
+        JP_canciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         JT_tablaCancioArtista = new javax.swing.JTable();
         JL_tituloCanciones = new javax.swing.JLabel();
@@ -48,7 +58,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_buscarCancion = new javax.swing.JButton();
         JB_añadirCancion = new javax.swing.JButton();
         JB_eliminarCancion = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
+        JP_biblioteca = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -120,15 +130,11 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        JP_canciones.setBackground(new java.awt.Color(255, 255, 255));
 
         JT_tablaCancioArtista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Cancion", "Artista"
@@ -185,22 +191,22 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout JP_cancionesLayout = new javax.swing.GroupLayout(JP_canciones);
+        JP_canciones.setLayout(JP_cancionesLayout);
+        JP_cancionesLayout.setHorizontalGroup(
+            JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_cancionesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JB_añadirCancion)
                 .addGap(307, 307, 307))
-            .addGroup(jPanel3Layout.createSequentialGroup()
+            .addGroup(JP_cancionesLayout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(JP_cancionesLayout.createSequentialGroup()
                         .addComponent(JB_eliminarCancion)
                         .addGap(135, 135, 135)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(JP_cancionesLayout.createSequentialGroup()
                         .addComponent(JL_tituloCanciones)
                         .addGap(45, 45, 45)
                         .addComponent(JB_buscarCancion)
@@ -208,43 +214,43 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                         .addComponent(JTF_BuscaCanciones, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(293, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        JP_cancionesLayout.setVerticalGroup(
+            JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_cancionesLayout.createSequentialGroup()
                 .addContainerGap(37, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_cancionesLayout.createSequentialGroup()
                         .addComponent(JL_tituloCanciones)
                         .addGap(49, 49, 49))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_cancionesLayout.createSequentialGroup()
+                        .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(JTF_BuscaCanciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(JB_buscarCancion))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(JB_añadirCancion)
                         .addGap(6, 6, 6)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addGroup(JP_cancionesLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
                         .addComponent(JB_eliminarCancion)))
                 .addGap(12, 12, 12))
         );
 
-        jTabbedPane1.addTab("Canciones", jPanel3);
+        jTabbedPane1.addTab("Canciones", JP_canciones);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout JP_bibliotecaLayout = new javax.swing.GroupLayout(JP_biblioteca);
+        JP_biblioteca.setLayout(JP_bibliotecaLayout);
+        JP_bibliotecaLayout.setHorizontalGroup(
+            JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1021, Short.MAX_VALUE)
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        JP_bibliotecaLayout.setVerticalGroup(
+            JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 487, Short.MAX_VALUE)
         );
 
-        jTabbedPane1.addTab("Biblioteca", jPanel5);
+        jTabbedPane1.addTab("Biblioteca", JP_biblioteca);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -269,7 +275,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     }//GEN-LAST:event_JTF_BuscaCancionesActionPerformed
 
     private void JB_añadirCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_añadirCancionActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_JB_añadirCancionActionPerformed
 
     private void JB_eliminarCancionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_eliminarCancionActionPerformed
@@ -299,7 +305,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
      *
      * @return el dato que esta en el JTF_buscarCancion
      */
-    public String getpedirCancionString() {
+    public String pedirCancionString() {
         return JTF_BuscaCanciones.getText();
     }
 
@@ -310,8 +316,8 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
      *
      * @param error String
      */
-    public void verError(String error) {
-        JOptionPane.showMessageDialog(this, error, "Erro", JOptionPane.ERROR_MESSAGE);
+    public void mostrartraMensaje(String error) {
+        JOptionPane.showMessageDialog(this, error, "Erro", JOptionPane.INFORMATION_MESSAGE);
     }
 
     /**
@@ -319,7 +325,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
      * comando exclusivo a cada uno para que puedan se utillizados por ejemplo
      * en el controlador
      *
-     * @param listener 
+     * play siguiete anterior eliminar añadir buscar
+     *
+     * @param listener
      */
     public void addListener(ActionListener listener) {
         JB_play.setActionCommand("play");//le asigno un comando especifico para llamarlo
@@ -331,15 +339,58 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_anterior.setActionCommand("anterior");
         JB_anterior.addActionListener(listener);
 
-        //eliminar , añadir, buscar
         JB_eliminarCancion.setActionCommand("eliminar");
         JB_eliminarCancion.addActionListener(listener);
 
-        JB_añadirCancion.setActionCommand("añadir");
+        JB_añadirCancion.setActionCommand("anadir");
         JB_añadirCancion.addActionListener(listener);
 
         JB_buscarCancion.setActionCommand("buscar");
         JB_buscarCancion.addActionListener(listener);
+    }
+
+    public void addAbrirArchivoListener(ActionListener listener) {
+        JB_añadirCancion.addActionListener(listener);
+    }
+
+    /**
+     * Metodo que permite abrir el archivo mp3 solamente
+     *
+     * @return archivo seleccionado
+     */
+    public File[] abrirArchivoMp3() {
+        JFileChooser archivo = new JFileChooser();
+        archivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MP3 Files", "mp3"));
+        archivo.setMultiSelectionEnabled(true);
+        int resultado = archivo.showOpenDialog(this);
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            return archivo.getSelectedFiles();
+        }
+        return null;
+    }
+
+    /**
+     * metodo que permite ver el contenido de el archivo txt en la tabla
+     */
+    public void verContenidoTxt() {
+        DefaultTableModel model = (DefaultTableModel) JT_tablaCancioArtista.getModel();
+        model.setRowCount(0);
+
+        try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/canciones.txt"))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length >= 3) {
+                    String nombre = datos[1];
+                    String artista = datos[2];
+                    model.addRow(new Object[]{nombre, artista});
+
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String args[]) {
@@ -377,6 +428,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         });
     }
 
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JB_anterior;
     private javax.swing.JButton JB_añadirCancion;
@@ -386,12 +438,12 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     private javax.swing.JButton JB_siguiente;
     private javax.swing.JSlider JL_progresoMusica;
     private javax.swing.JLabel JL_tituloCanciones;
+    private javax.swing.JPanel JP_biblioteca;
+    private javax.swing.JPanel JP_canciones;
     private javax.swing.JTextField JTF_BuscaCanciones;
     private javax.swing.JTable JT_tablaCancioArtista;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables

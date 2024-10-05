@@ -24,12 +24,14 @@ public class Cancion {
     String titulo;
     String artista;
     Cancion siguiente;
+    String ruta;
 
-    public Cancion(int id, String titulo, String artista) {
+    public Cancion(int id, String titulo, String artista,String ruta) {
         this.id = id;
         this.titulo = titulo;
         this.artista = artista;
         this.siguiente = null;
+        this.ruta = ruta;
     }
     
    

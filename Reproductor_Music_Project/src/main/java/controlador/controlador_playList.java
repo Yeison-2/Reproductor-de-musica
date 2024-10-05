@@ -54,7 +54,9 @@ public class controlador_playList {
         String titulo = leerCadena();
         System.out.println("Ingrese el artista de la canción:");
         String artista = leerCadena();
-        playlist.agregarCancion(titulo, artista);
+        System.out.println("Ingrese el artista de la canción:");
+        String ruta = leerCadena();
+        playlist.agregarCancion(titulo, artista,ruta);
     }
 
     private void eliminarCancion() {
