@@ -53,7 +53,6 @@ public class modelo_playList {
                 top = nuevoNodo;
             }
             size++;
-            //guardarCambiosCancionTxt(id, titulo, artista, ruta); no deberia guardar en el txt todabia
             return "Canción agregada " + titulo + " - " + artista;
         }
     }
@@ -112,7 +111,7 @@ public class modelo_playList {
      * @param id tomado del modelo playList
      * @param nombre tomado del archivo mediante el metodo getNombreCancion
      * @param artista tomado del archivo mediante el metodo getNombreArtista
-     * @param ruta toma del archivo actual
+     * @param ruta toma del archivo actual que se este leyendo
      */
     private void guardarCambiosCancionTxt(int id, String nombre, String artista, String ruta) {
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/main/resources/canciones.txt", true))) {
@@ -124,7 +123,12 @@ public class modelo_playList {
         }
     }
 
-    //el id generado siempre debe ser mayor al del txt
+    /**
+     * Hace que el id simpre se incremente en 1 al ultimo id mas grende que se
+     * encuentre dentro del archivo txt
+     *
+     * @return
+     */
     private int getIdMaximoDelTxt() {
         int idMax = 0;
         try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/canciones.txt"))) {
@@ -144,6 +148,16 @@ public class modelo_playList {
         return idMax;
     }
 
+    /**
+     * Verifica que la cancion que se quiere añadir no este ya en el archivo txt
+     * para evitar duplicados no pide id por que el id siempre sera distito por
+     * que auto incrementa
+     *
+     * @param nombre
+     * @param artista
+     * @param ruta
+     * @return true si se esocntro la cancion y es duplicada
+     */
     private boolean esCancionDuplicada(String nombre, String artista, String ruta) {
         try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/canciones.txt"))) {
             String linea;
@@ -163,13 +177,18 @@ public class modelo_playList {
         }
         return false;
     }
-    
-    private void limpiarArchivoTxt(){
+
+    /**
+     * metodo para limpiar el archivo canciones.txt para que cade vez que
+     * muestre en la viste muestre la estructura de datos correspondiente a
+     * pilas
+     */
+    private void limpiarArchivoTxt() {
         try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/main/resources/canciones.txt"))) {
-        escritor.write(""); // deja limpio el archivo listo para mostrar la estructura de pilas
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
+            escritor.write(""); // deja limpio el archivo listo para mostrar la estructura de pilas
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }
