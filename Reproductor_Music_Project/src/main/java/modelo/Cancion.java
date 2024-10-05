@@ -18,8 +18,6 @@ package modelo;
  * @author Yeison Romero Salinas
  */
 public class Cancion {
-    // el id toca pensarlo
-    // podriamos crear un metodo para agregar Canciones y se pide el id de la cancion
     int id;
     String titulo;
     String artista;

@@ -86,7 +86,7 @@ public class modelo_playList {
             System.out.println("La playlist esta vacia");
             return;
         } else {
-            limpiarArchivoTxt(); //para dejar limpio el archivo txt
+            limpiarArchivoTxt();
             Cancion actual = top;
             while (actual != null) {
                 guardarCambiosCancionTxt(actual.id, actual.titulo, actual.artista, actual.ruta);
