@@ -53,7 +53,7 @@ public class modelo_playList {
                 top = nuevoNodo;
             }
             size++;
-            guardarCambiosCancionTxt(id, titulo, artista, ruta);
+            //guardarCambiosCancionTxt(id, titulo, artista, ruta); no deberia guardar en el txt todabia
             return "Canción agregada " + titulo + " - " + artista;
         }
     }
@@ -87,34 +87,11 @@ public class modelo_playList {
             System.out.println("La playlist esta vacia");
             return;
         } else {
-            // Step 1: Count the number of elements in the stack
-            int count = 0;
+            limpiarArchivoTxt(); //para dejar limpio el archivo txt
             Cancion actual = top;
             while (actual != null) {
-                count++;
+                guardarCambiosCancionTxt(actual.id, actual.titulo, actual.artista, actual.ruta);
                 actual = actual.siguiente;
-            }
-
-            // Step 2: Create an array of Cancion with the size obtained
-            Cancion[] canciones = new Cancion[count];
-
-            // Step 3: Fill the array with elements from the stack
-            actual = top;
-            for (int i = 0; i < count; i++) {
-                canciones[i] = actual;
-                actual = actual.siguiente;
-            }
-
-            // Step 4: Write the array to the file in reverse order
-            try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/main/resources/canciones.txt"))) {
-                for (int i = count - 1; i >= 0; i--) {
-                    Cancion cancion = canciones[i];
-                    escritor.write(cancion.id + "," + cancion.titulo + "," + cancion.artista + "," + cancion.ruta);
-                    escritor.newLine();
-                }
-                escritor.flush();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         }
     }
@@ -185,6 +162,14 @@ public class modelo_playList {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    private void limpiarArchivoTxt(){
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/main/resources/canciones.txt"))) {
+        escritor.write(""); // deja limpio el archivo listo para mostrar la estructura de pilas
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
 }
