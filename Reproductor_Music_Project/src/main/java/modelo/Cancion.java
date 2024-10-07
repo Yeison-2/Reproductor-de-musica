@@ -13,6 +13,8 @@
 
 package modelo;
 
+import java.io.FileInputStream;
+
 /**
  *
  * @author Yeison Romero Salinas
@@ -25,7 +27,7 @@ public class Cancion {
     String artista;
     Cancion siguiente;
     String ruta;
-
+FileInputStream archivo;
     public Cancion(int id, String titulo, String artista,String ruta) {
         this.id = id;
         this.titulo = titulo;
@@ -33,6 +35,20 @@ public class Cancion {
         this.siguiente = null;
         this.ruta = ruta;
     }
+
+    public Cancion(FileInputStream archivo) {
+        this.archivo = archivo;
+    }
+
+    public String getRuta() {
+        return ruta;
+    }
+    
+    
+
+   
+
+    
     
    
     

@@ -20,9 +20,13 @@ import vista.vista_playList;
  */
 public class Controlador_ReproductorMusic implements ActionListener {
 
+    public static void ReproducirCanciones() {
+        String ruta="\"C:\\Users\\Felipe\\Documents\\musica\\sonido.mp3\"";
+        modelo_playList.reproducirCancion(ruta);
+    }
+
     private modelo_playList playlist;
     private Vista_ReproductorMusica view;
-    
 
     public Controlador_ReproductorMusic(modelo_playList playlist, Vista_ReproductorMusica view) {
         this.playlist = playlist;
@@ -55,10 +59,10 @@ public class Controlador_ReproductorMusic implements ActionListener {
                 //traer id de la vista
                 break;
             case "anadir":
-              
+
                 playlist.mostrarPlayList();
                 view.verContenidoTxt();
-                
+
                 break;
 
             case "buscar":
@@ -88,7 +92,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
                         String artista = getNombreArtista(mp3file);
                         String titulo = getNombreCancion(mp3file);
                         String ruta = archivoMp3Actual.getAbsolutePath();
-                        String respuesta = playlist.agregarCancion(artista, titulo,ruta);
+                        String respuesta = playlist.agregarCancion(artista, titulo, ruta);
                         view.mostrartraMensaje(respuesta);
                         //Toca mirar que el id se este guardando bien
                         int id = playlist.getId();
@@ -99,8 +103,6 @@ public class Controlador_ReproductorMusic implements ActionListener {
                 }
             }
         }
-
-        
 
         /**
          * Recibe el archivo mp3 actual y saca el nombre de la cancion
@@ -119,6 +121,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
         /**
          * Recibe el archivo mp3 actual y saca el nombre del artista
+         *
          * @param mp3file
          * @return String nombreArtista
          */
@@ -132,4 +135,6 @@ public class Controlador_ReproductorMusic implements ActionListener {
         }
 
     }
+
+
 }

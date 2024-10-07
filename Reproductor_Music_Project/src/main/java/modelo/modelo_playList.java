@@ -7,10 +7,16 @@ package modelo;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
 
 /**
  *
@@ -189,6 +195,36 @@ public class modelo_playList {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+    public static void reproducirCancion(String ruta) {
+        
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(ruta));
+            AudioFormat audioFormat = audioInputStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, audioFormat);
+            Clip clip = (Clip) AudioSystem.getLine(info);
+            clip.open(audioInputStream);
+            clip.start();
+            Thread.sleep(clip.getMicrosecondLength() / 1000); // Espera a que termine de reproducir la canción
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void reproducirCanciones() {
+        if (playListVacio()) {
+            System.out.println("La playlist esta vacia");
+            return;
+        } else {
+            Cancion actual = top;
+            while (actual != null) {
+                reproducirCancion(actual.ruta);
+                actual = actual.siguiente;
+            }
+        }
+    }
+
+    
 
 }

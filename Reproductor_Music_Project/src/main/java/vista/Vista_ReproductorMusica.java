@@ -6,12 +6,16 @@ package vista;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import controlador.Controlador_ReproductorMusic;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +25,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.DefaultTableModel;
-
+import javazoom.jl.decoder.JavaLayerException;
+import modelo.Cancion;
+import modelo.modelo_playList.*;
 /**
  *
  * @author Yeison Romero
@@ -34,7 +40,8 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         this.setResizable(false);
         this.setTitle("Reproductor de musica");
         this.setSize(new Dimension(1021, 650));
-        configurarPlaceholder(JTF_BuscaCanciones, "Buscar Cancion");
+        configurarPlaceholder(JTF_BuscaCanciones, "Buscar Cancion")
+                ;
         //verContenidoTxt();
 
     }
@@ -287,7 +294,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     }//GEN-LAST:event_JB_buscarCancionActionPerformed
 
     private void JB_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_playActionPerformed
-        // TODO add your handling code here:
+ 
     }//GEN-LAST:event_JB_playActionPerformed
 
     private void JB_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_anteriorActionPerformed
@@ -426,7 +433,14 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 }
             }
         });
+        //metodo para reproducir la cancion
+        
     }
+    
+    
+
+    
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
