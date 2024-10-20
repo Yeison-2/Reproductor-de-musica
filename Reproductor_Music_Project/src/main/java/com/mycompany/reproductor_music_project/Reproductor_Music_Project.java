@@ -13,6 +13,7 @@ import com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatMaterialLighte
 import controlador.Controlador_ReproductorMusic;
 import vista.Vista_ReproductorMusica;
 import controlador.controlador_playList;
+import modelo.Modelo_Reproductor;
 import modelo.modelo_playList;
 import vista.vista_playList;
 
@@ -25,6 +26,7 @@ public class Reproductor_Music_Project {
     public static void main(String[] args) {
          modelo_playList modelo = new modelo_playList();
         vista_playList view = new vista_playList();
+        //Modelo_Reproductor model2 = new Modelo_Reproductor(modelo,j);
         controlador_playList con = new controlador_playList( modelo, view);
        // con.ejecutarAccion();
 /*

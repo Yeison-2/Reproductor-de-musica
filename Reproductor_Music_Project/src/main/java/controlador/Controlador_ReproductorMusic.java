@@ -5,11 +5,15 @@
 package controlador;
 
 import com.mpatric.mp3agic.Mp3File;
+import com.mycompany.reproductor_music_project.Reproductor_Music_Project;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import javax.swing.JOptionPane;
+import modelo.Cancion;
+import modelo.Modelo_Reproductor;
 import modelo.modelo_playList;
 import vista.Vista_ReproductorMusica;
 import vista.vista_playList;
@@ -22,11 +26,12 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
     private modelo_playList playlist;
     private Vista_ReproductorMusica view;
-    
+    private Modelo_Reproductor reproductor;
 
     public Controlador_ReproductorMusic(modelo_playList playlist, Vista_ReproductorMusica view) {
         this.playlist = playlist;
         this.view = view;
+        this.reproductor = new Modelo_Reproductor(playlist,view.getSlider());
         this.view.addListener(this);
         this.view.addAbrirArchivoListener(new AbrirArchivoListener());
 
@@ -37,33 +42,63 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
     }
 
+    public Cancion getCancionporId() {
+        int id = view.getIdCancion(view.getCancionSeleccionadaTabla());
+
+        Cancion cancion = playlist.buscarCancionPorId(id);
+        return cancion;
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
+
         //al finalisar se puede colocar esto en un try catch
         switch (e.getActionCommand()) {
             case "play":
-                //colocar la logica del boton play
+                 playlist.cargarCancionesDesdeArchivo();
+                reproductor.reproducir(getCancionporId());
                 break;
             case "siguiente":
-                //colocar logica para la siguiente cancion
+                reproductor.siguiente();
+                
                 break;
             case "anterior":
-                //colocar logica para mostra la anterior cancion
+                reproductor.anterior();
                 break;
             case "eliminar":
-                //logica eliminar
-                //traer id de la vista
-                break;
-            case "anadir":
-              
+
+                int id = view.getIdCancion(view.getCancionSeleccionadaTabla());
+                if (id != -1) {
+                    if (playlist.eliminarCancion(id)) {
+                        view.mostrartraMensaje("Canción eliminada con éxito.");
+
+                    } else {
+                        view.mostrartraMensaje("No se pudo eliminar la canción.");
+
+                    }
+                }
                 playlist.mostrarPlayList();
                 view.verContenidoTxt();
-                
+
+                break;
+            case "anadir":
+
+                playlist.mostrarPlayList();
+                view.verContenidoTxt();
+
                 break;
 
             case "buscar":
-                //anadir logica de buscar cancion por 
-                // String
+                String nombre = view.getNombreImagenABuscar();
+                Cancion[] canciones = playlist.buscarCancionPorNombre(nombre);
+                if (canciones.length > 0) {
+                    for (Cancion cancion : canciones) {
+                        view.mostrartraMensaje("Canción encontrada: " + cancion.getTitulo() + " - " + cancion.getArtista());
+                    }
+                } else {
+                    view.mostrartraMensaje("Canción no encontrada.");
+                }
                 break;
             default:
                 throw new AssertionError("Comando no reconocido: " + e.getActionCommand());
@@ -88,7 +123,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
                         String artista = getNombreArtista(mp3file);
                         String titulo = getNombreCancion(mp3file);
                         String ruta = archivoMp3Actual.getAbsolutePath();
-                        String respuesta = playlist.agregarCancion(artista, titulo,ruta);
+                        String respuesta = playlist.agregarCancion(artista, titulo, ruta);
                         view.mostrartraMensaje(respuesta);
                         //Toca mirar que el id se este guardando bien
                         int id = playlist.getId();
@@ -99,8 +134,6 @@ public class Controlador_ReproductorMusic implements ActionListener {
                 }
             }
         }
-
-        
 
         /**
          * Recibe el archivo mp3 actual y saca el nombre de la cancion
@@ -119,6 +152,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
         /**
          * Recibe el archivo mp3 actual y saca el nombre del artista
+         *
          * @param mp3file
          * @return String nombreArtista
          */
@@ -132,4 +166,5 @@ public class Controlador_ReproductorMusic implements ActionListener {
         }
 
     }
+
 }

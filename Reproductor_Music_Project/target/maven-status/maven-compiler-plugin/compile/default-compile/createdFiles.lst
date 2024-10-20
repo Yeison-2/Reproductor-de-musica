@@ -5,9 +5,11 @@ vista\Vista_ReproductorMusica$6.class
 vista\Vista_ReproductorMusica$1.class
 controlador\Controlador_ReproductorMusic$AbrirArchivoListener.class
 vista\Vista_ReproductorMusica$2.class
+modelo\Modelo_Reproductor.class
 vista\Vista_ReproductorMusica$7.class
 vista\Vista_ReproductorMusica$9.class
 controlador\Controlador_ReproductorMusic.class
+modelo\Modelo_Reproductor$1.class
 vista\Vista_ReproductorMusica$5.class
 vista\Vista_ReproductorMusica$10.class
 vista\Vista_ReproductorMusica$8.class

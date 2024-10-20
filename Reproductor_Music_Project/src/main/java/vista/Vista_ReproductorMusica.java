@@ -6,6 +6,7 @@ package vista;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import controlador.Controlador_ReproductorMusic;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -18,6 +19,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.DefaultTableModel;
@@ -28,6 +30,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
+    private Controlador_ReproductorMusic ctrl;
+
     public Vista_ReproductorMusica() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -35,7 +39,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         this.setTitle("Reproductor de musica");
         this.setSize(new Dimension(1021, 650));
         configurarPlaceholder(JTF_BuscaCanciones, "Buscar Cancion");
-        //verContenidoTxt();
+        verContenidoTxt();
 
     }
 
@@ -108,7 +112,6 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(JL_progresoMusica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(405, 405, 405)
                 .addComponent(JB_anterior)
@@ -117,6 +120,10 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 .addGap(48, 48, 48)
                 .addComponent(JB_siguiente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(JL_progresoMusica, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -309,6 +316,62 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         return JTF_BuscaCanciones.getText();
     }
 
+    /**
+     * devuelve un arreglo de String que contiene el nombre y el artista de la
+     * cancion seleccionada retorna null si no se selecciono nada
+     *
+     * @return
+     */
+    public String[] getCancionSeleccionadaTabla() {
+        int filaSeleccionada = JT_tablaCancioArtista.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            DefaultTableModel model = (DefaultTableModel) JT_tablaCancioArtista.getModel();
+            String titulo = (String) model.getValueAt(filaSeleccionada, 0);
+            String artista = (String) model.getValueAt(filaSeleccionada, 1);
+            return new String[]{titulo, artista};
+
+        }
+        this.mostrartraMensaje("Seleccione una fila para eliminar.");
+        return null;
+    }
+
+    /**
+     * retorna el id de la cancion guardad en el archivo txt canciones
+     *
+     * @param titulo
+     * @param artista
+     * @return
+     */
+    private int getIdCancionTxt(String titulo, String artista) {
+        try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/canciones.txt"))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length == 4) {
+                    String existeTitulo = datos[1].strip();
+                    String existeArtista = datos[2].strip();
+                    if (existeTitulo.equals(titulo) && existeArtista.equals(artista)) {
+                        return Integer.parseInt(datos[0]);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public int getIdCancion(String[] contenidoFila) {
+        if (contenidoFila != null) {
+            return getIdCancionTxt(contenidoFila[0], contenidoFila[1]);
+        }
+        return -1;
+    }
+
+    public String getNombreImagenABuscar() {
+        return JTF_BuscaCanciones.getText().trim();
+    }
+
     //metodo para agregar el nombre y el autor a la table
     /**
      * Metodo para mostra notificaciones de errores como por ejemplo dato no
@@ -391,6 +454,10 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public JSlider getSlider(){
+        return JL_progresoMusica;
     }
 
     public static void main(String args[]) {

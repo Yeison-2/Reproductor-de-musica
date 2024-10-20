@@ -11,6 +11,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -31,6 +33,7 @@ public class modelo_playList {
         this.idCounter = getIdMaximoDelTxt() + 1;
         top = null;
         this.size = 0;
+        cargarCancionesDesdeArchivo(); // Cargar canciones desde el archivo
     }
 
     //metodo para verificar si la lista de canciones esta vacia
@@ -72,6 +75,7 @@ public class modelo_playList {
                     anterior.siguiente = actual.siguiente;
                 }
                 size--;
+                mostrarPlayList();
                 return true;
             }
             anterior = actual;
@@ -82,16 +86,15 @@ public class modelo_playList {
 
     // Método para mostrar la playlist
     public void mostrarPlayList() {
+        limpiarArchivoTxt();
         if (playListVacio()) {
             System.out.println("La playlist esta vacia");
             return;
-        } else {
-            limpiarArchivoTxt();
-            Cancion actual = top;
-            while (actual != null) {
-                guardarCambiosCancionTxt(actual.id, actual.titulo, actual.artista, actual.ruta);
-                actual = actual.siguiente;
-            }
+        }
+        Cancion actual = top;
+        while (actual != null) {
+            guardarCambiosCancionTxt(actual.id, actual.titulo, actual.artista, actual.ruta);
+            actual = actual.siguiente;
         }
     }
 
@@ -191,4 +194,82 @@ public class modelo_playList {
         }
     }
 
+    public void cargarCancionesDesdeArchivo() {
+        try (BufferedReader lector = new BufferedReader(new FileReader("src/main/resources/canciones.txt"))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length == 4) {
+                    int id = Integer.parseInt(datos[0]);
+                    String titulo = datos[1].strip();
+                    String artista = datos[2].strip();
+                    String ruta = datos[3].strip();
+                    Cancion nuevaCancion = new Cancion(id, titulo, artista, ruta);
+                    nuevaCancion.siguiente = top;
+                    top = nuevaCancion;
+                    size++;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Metodo que utiiza un
+     *
+     * @param nombre
+     * @return
+     */
+    public Cancion[] buscarCancionPorNombre(String nombre) {
+        int maxResults = 100; // Define a maximum number of results to avoid excessive memory usage
+        Cancion[] resultados = new Cancion[maxResults];
+        int count = 0;
+        Cancion actual = top;
+        Pattern pattern = Pattern.compile(".*" + Pattern.quote(nombre) + ".*", Pattern.CASE_INSENSITIVE);
+
+        while (actual != null && count < maxResults) {
+            Matcher matcher = pattern.matcher(actual.titulo);
+            if (matcher.matches()) {
+                resultados[count++] = actual;
+            }
+            actual = actual.siguiente;
+        }
+
+        // Resize the array to the actual number of results
+        Cancion[] resultadosFinales = new Cancion[count];
+        System.arraycopy(resultados, 0, resultadosFinales, 0, count);
+        return resultadosFinales;
+    }
+
+    public Cancion buscarCancionPorId(int id) {
+        Cancion actual = top;
+        while (actual != null) {
+            if (actual.id == id) {
+                return actual;
+            }
+            actual = actual.siguiente;
+        }
+        return null;
+    }
+
+    public Cancion getSiguiente(Cancion cancion) {
+        if (cancion != null) {
+            return cancion.siguiente;
+        }
+        return null;
+    }
+
+    public Cancion getAnterior(Cancion cancion) {
+        if (cancion != null && top != null) {
+            Cancion actual = top;
+            Cancion anterior = null;
+            while (actual != null && actual != cancion) {
+                anterior = actual;
+                actual = actual.siguiente;
+            }
+            return anterior;
+        }
+        return null;
+    }
 }
