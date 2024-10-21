@@ -66,11 +66,15 @@ public class Controlador_ReproductorMusic implements ActionListener {
             case "anterior":
                 reproductor.anterior();
                 break;
+            case "pausa":
+                reproductor.pausar();
+                break;
             case "eliminar":
-
+                reproductor.detener();
                 int id = view.getIdCancion(view.getCancionSeleccionadaTabla());
                 if (id != -1) {
-                    if (playlist.eliminarCancion(id)) {
+                    if (playlist.eliminarCancion(id)) 
+                    {
                         view.mostrartraMensaje("Canción eliminada con éxito.");
 
                     } else {

@@ -53,6 +53,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_play = new javax.swing.JButton();
         JB_anterior = new javax.swing.JButton();
         JB_siguiente = new javax.swing.JButton();
+        JB_pausa = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         JP_canciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -77,7 +78,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         JL_progresoMusica.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -108,6 +109,15 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             }
         });
 
+        JB_pausa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/TablerPlayerPauseFilled.png"))); // NOI18N
+        JB_pausa.setBorderPainted(false);
+        JB_pausa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JB_pausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_pausaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -115,9 +125,11 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(405, 405, 405)
                 .addComponent(JB_anterior)
-                .addGap(53, 53, 53)
+                .addGap(18, 18, 18)
                 .addComponent(JB_play)
-                .addGap(48, 48, 48)
+                .addGap(26, 26, 26)
+                .addComponent(JB_pausa)
+                .addGap(18, 18, 18)
                 .addComponent(JB_siguiente)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -133,7 +145,8 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JB_play)
                     .addComponent(JB_anterior)
-                    .addComponent(JB_siguiente))
+                    .addComponent(JB_siguiente)
+                    .addComponent(JB_pausa))
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
@@ -305,6 +318,10 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JB_siguienteActionPerformed
 
+    private void JB_pausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_pausaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_pausaActionPerformed
+
     //metodos para enviar todo al controlador
     /**
      * metodo que retorna la cancion a buscar con String para usurla en el
@@ -410,6 +427,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
         JB_buscarCancion.setActionCommand("buscar");
         JB_buscarCancion.addActionListener(listener);
+        
+        JB_pausa.setActionCommand("pausa");
+        JB_pausa.addActionListener(listener);
     }
 
     public void addAbrirArchivoListener(ActionListener listener) {
@@ -501,6 +521,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     private javax.swing.JButton JB_añadirCancion;
     private javax.swing.JButton JB_buscarCancion;
     private javax.swing.JButton JB_eliminarCancion;
+    private javax.swing.JButton JB_pausa;
     private javax.swing.JButton JB_play;
     private javax.swing.JButton JB_siguiente;
     private javax.swing.JSlider JL_progresoMusica;

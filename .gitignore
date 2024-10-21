@@ -37,5 +37,8 @@ replay_pid*
 # Archivos de configuración de Visual Studio Code
 /.vscode/
 /Reproductor_Music_Project/target/
+
 # Ignorar el archivo workspace.xml de IntelliJ IDEA
 Reproductor_Music_Project/.idea/workspace.xml
+/Reproductor-de-musica_ListaCircular/Reproductor_Music_Project/.idea
+

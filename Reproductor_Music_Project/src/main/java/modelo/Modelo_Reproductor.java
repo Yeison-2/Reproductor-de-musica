@@ -33,10 +33,9 @@ public class Modelo_Reproductor {
     public Modelo_Reproductor(modelo_playList listaReproduccion, JSlider barraProgreso) {
         this.listaReproduccion = listaReproduccion;
         this.barraProgreso = barraProgreso;
-        this.listaReproduccion.cargarCancionesDesdeArchivo();
     }
 
-    public void reproducir(Cancion cancion) {
+     public void reproducir(Cancion cancion) {
         if (cancion != null) {
             detener();
             actual = cancion;
@@ -114,4 +113,5 @@ public class Modelo_Reproductor {
             }
         }
     }
+    
 }
