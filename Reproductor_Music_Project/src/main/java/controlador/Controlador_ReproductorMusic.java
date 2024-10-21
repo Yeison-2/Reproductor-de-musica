@@ -21,7 +21,7 @@ import vista.vista_playList;
 public class Controlador_ReproductorMusic implements ActionListener {
 
     public static void ReproducirCanciones() {
-        String ruta="\"C:\\Users\\Felipe\\Documents\\musica\\sonido.mp3\"";
+        String ruta="\"C:\\Users\\Felipe\\Documents\\musica\"";
         modelo_playList.reproducirCancion(ruta);
     }
 

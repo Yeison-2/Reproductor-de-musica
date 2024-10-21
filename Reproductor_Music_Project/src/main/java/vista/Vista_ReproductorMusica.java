@@ -27,7 +27,7 @@ import javax.swing.plaf.FileChooserUI;
 import javax.swing.table.DefaultTableModel;
 import javazoom.jl.decoder.JavaLayerException;
 import modelo.Cancion;
-import modelo.modelo_playList.*;
+import modelo.modelo_playList;
 /**
  *
  * @author Yeison Romero
@@ -294,7 +294,11 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     }//GEN-LAST:event_JB_buscarCancionActionPerformed
 
     private void JB_playActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_playActionPerformed
- 
+
+    
+        // Llama al método reproducirCancion con la ruta de la canción
+        modelo_playList.reproducirCancion(pedirCancionString());
+    
     }//GEN-LAST:event_JB_playActionPerformed
 
     private void JB_anteriorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_anteriorActionPerformed
