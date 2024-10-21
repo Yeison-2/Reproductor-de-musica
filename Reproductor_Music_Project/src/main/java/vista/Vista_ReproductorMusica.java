@@ -331,7 +331,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             return new String[]{titulo, artista};
 
         }
-        this.mostrartraMensaje("Seleccione una fila para eliminar.");
+        this.mostrartraMensaje("Seleccione una fila para ejecutar la acción.");
         return null;
     }
 
@@ -423,7 +423,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
      */
     public File[] abrirArchivoMp3() {
         JFileChooser archivo = new JFileChooser();
-        archivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("MP3 Files", "mp3"));
+        archivo.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivo mp3", "mp3"));
         archivo.setMultiSelectionEnabled(true);
         int resultado = archivo.showOpenDialog(this);
         if (resultado == JFileChooser.APPROVE_OPTION) {

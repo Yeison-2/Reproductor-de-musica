@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a5373cc8-01fc-426c-b8cc-9a286998d50d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mycompany/reproductor_music_project/Reproductor_Music_Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mycompany/reproductor_music_project/Reproductor_Music_Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controlador/Controlador_ReproductorMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controlador/Controlador_ReproductorMusic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/Cancion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/Cancion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/modelo/modelo_playList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/modelo/modelo_playList.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/vista/Vista_ReproductorMusica.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vista/Vista_ReproductorMusica.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/vista/Vista_ReproductorMusica.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/vista/Vista_ReproductorMusica.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/canciones.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/canciones.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -286,7 +277,7 @@
       <workItem from="1728324596379" duration="232000" />
       <workItem from="1729427834214" duration="7156000" />
       <workItem from="1729463283227" duration="22000" />
-      <workItem from="1729463312842" duration="3946000" />
+      <workItem from="1729463312842" duration="6210000" />
     </task>
     <servers />
   </component>
