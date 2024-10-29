@@ -70,7 +70,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
                 reproductor.pausar();
                 break;
             case "eliminar":
-                reproductor.detener();
+                reproductor.pausar();
                 int id = view.getIdCancion(view.getCancionSeleccionadaTabla());
                 if (id != -1) {
                     if (playlist.eliminarCancion(id)) 
@@ -104,6 +104,19 @@ public class Controlador_ReproductorMusic implements ActionListener {
                     view.mostrartraMensaje("Canción no encontrada.");
                 }
                 break;
+                
+           case "eliminar lista cancion":
+                reproductor.pausar();
+            try {
+                playlist.eliminarListaCancion(); // Llamada al método que elimina todas las canciones
+                view.mostrartraMensaje("Todas las canciones han sido eliminadas.");
+            } catch (RuntimeException ex) {
+                view.mostrartraMensaje(ex.getMessage()); // Muestra el mensaje de error si la lista está vacía
+            }
+             playlist.mostrarPlayList();
+                view.verContenidoTxt();
+            break;
+                
             default:
                 throw new AssertionError("Comando no reconocido: " + e.getActionCommand());
 

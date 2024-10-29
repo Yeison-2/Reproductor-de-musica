@@ -37,7 +37,7 @@ public class Modelo_Reproductor {
 
      public void reproducir(Cancion cancion) {
         if (cancion != null) {
-            detener();
+           pausar();
             actual = cancion;
             hiloReproduccion = new Thread(() -> {
                 try {
@@ -78,19 +78,13 @@ public class Modelo_Reproductor {
     public void pausar() {
         if (reproductor != null && hiloReproduccion != null) {
             hiloReproduccion.interrupt();
+            reproductor.close();
             temporizador.stop();
             System.out.println("Reproducción pausada.");
         }
     }
 
-    public void detener() {
-        if (reproductor != null && hiloReproduccion != null) {
-            hiloReproduccion.interrupt();
-            reproductor.close();
-            temporizador.stop();
-            System.out.println("Reproducción detenida.");
-        }
-    }
+    
 
     public void siguiente() {
         if (actual != null) {

@@ -20,11 +20,7 @@ import java.util.regex.Pattern;
  */
 public class modelo_playList {
 
-    //es una posible opcion para cada playList
-    /*seria bueno implementar otra clase que cuando se 
-    quiera crear una play list se cree una nueva clase
-    con estos mismos metodos toca investigar.
-     */
+   
     private Cancion top;
     int size;
     private int idCounter = 0;
@@ -81,15 +77,30 @@ public class modelo_playList {
             anterior = actual;
             actual = actual.siguiente;
         }
-        return false;
+        return true;
     }
+    
+    public void eliminarListaCancion() {
+    if (playListVacio()) {
+        throw new RuntimeException("La playlist se encuentra vacia");
+    }
+
+    // Limpiar la lista
+    top = null;
+    size = 0;
+
+    // Limpiar el archivo de texto
+    limpiarArchivoTxt();
+
+    System.out.println("Todas las canciones han sido eliminadas.");
+}
 
     // Método para mostrar la playlist
     public void mostrarPlayList() {
         limpiarArchivoTxt();
         if (playListVacio()) {
             System.out.println("La playlist esta vacia");
-            return;
+     
         }
         Cancion actual = top;
         while (actual != null) {

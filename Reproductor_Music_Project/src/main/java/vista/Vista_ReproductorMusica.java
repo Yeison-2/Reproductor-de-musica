@@ -63,6 +63,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_buscarCancion = new javax.swing.JButton();
         JB_añadirCancion = new javax.swing.JButton();
         JB_eliminarCancion = new javax.swing.JButton();
+        JB_eliminarLista = new javax.swing.JButton();
         JP_biblioteca = new javax.swing.JPanel();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -211,6 +212,16 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             }
         });
 
+        JB_eliminarLista.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/eliminar.png"))); // NOI18N
+        JB_eliminarLista.setText("Eliminar lista de canciones");
+        JB_eliminarLista.setBorderPainted(false);
+        JB_eliminarLista.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JB_eliminarLista.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_eliminarListaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout JP_cancionesLayout = new javax.swing.GroupLayout(JP_canciones);
         JP_canciones.setLayout(JP_cancionesLayout);
         JP_cancionesLayout.setHorizontalGroup(
@@ -223,7 +234,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(JP_cancionesLayout.createSequentialGroup()
-                        .addComponent(JB_eliminarCancion)
+                        .addGroup(JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(JB_eliminarCancion)
+                            .addComponent(JB_eliminarLista))
                         .addGap(135, 135, 135)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JP_cancionesLayout.createSequentialGroup()
@@ -232,7 +245,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                         .addComponent(JB_buscarCancion)
                         .addGap(18, 18, 18)
                         .addComponent(JTF_BuscaCanciones, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(293, Short.MAX_VALUE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         JP_cancionesLayout.setVerticalGroup(
             JP_cancionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -253,7 +266,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(JP_cancionesLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addComponent(JB_eliminarCancion)))
+                        .addComponent(JB_eliminarCancion)
+                        .addGap(18, 18, 18)
+                        .addComponent(JB_eliminarLista)))
                 .addGap(12, 12, 12))
         );
 
@@ -321,6 +336,10 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     private void JB_pausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_pausaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_JB_pausaActionPerformed
+
+    private void JB_eliminarListaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_eliminarListaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_eliminarListaActionPerformed
 
     //metodos para enviar todo al controlador
     /**
@@ -430,6 +449,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         
         JB_pausa.setActionCommand("pausa");
         JB_pausa.addActionListener(listener);
+        
+        JB_eliminarLista.setActionCommand("eliminar lista cancion");
+        JB_eliminarLista.addActionListener(listener);
     }
 
     public void addAbrirArchivoListener(ActionListener listener) {
@@ -521,6 +543,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
     private javax.swing.JButton JB_añadirCancion;
     private javax.swing.JButton JB_buscarCancion;
     private javax.swing.JButton JB_eliminarCancion;
+    private javax.swing.JButton JB_eliminarLista;
     private javax.swing.JButton JB_pausa;
     private javax.swing.JButton JB_play;
     private javax.swing.JButton JB_siguiente;
