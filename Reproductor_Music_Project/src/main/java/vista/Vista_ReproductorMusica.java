@@ -6,6 +6,7 @@ package vista;
 
 import com.formdev.flatlaf.FlatLightLaf;
 import com.formdev.flatlaf.intellijthemes.FlatCarbonIJTheme;
+import com.mpatric.mp3agic.Mp3File;
 import controlador.Controlador_ReproductorMusic;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
@@ -54,6 +55,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_anterior = new javax.swing.JButton();
         JB_siguiente = new javax.swing.JButton();
         JB_pausa = new javax.swing.JButton();
+        JB_aleatorio = new javax.swing.JButton();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         JP_canciones = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -65,6 +67,12 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         JB_eliminarCancion = new javax.swing.JButton();
         JB_eliminarLista = new javax.swing.JButton();
         JP_biblioteca = new javax.swing.JPanel();
+        JP_canciones1 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        JT_tablaCancioArtista1 = new javax.swing.JTable();
+        JL_tituloCanciones1 = new javax.swing.JLabel();
+        JB_añadirPlaylist = new javax.swing.JButton();
+        JCB_playList = new javax.swing.JComboBox<>();
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -119,6 +127,15 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
             }
         });
 
+        JB_aleatorio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/IconamoonPlaylistShuffleBold.png"))); // NOI18N
+        JB_aleatorio.setBorderPainted(false);
+        JB_aleatorio.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JB_aleatorio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_aleatorioActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -132,6 +149,8 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                 .addComponent(JB_pausa)
                 .addGap(18, 18, 18)
                 .addComponent(JB_siguiente)
+                .addGap(18, 18, 18)
+                .addComponent(JB_aleatorio)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
@@ -147,7 +166,8 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
                     .addComponent(JB_play)
                     .addComponent(JB_anterior)
                     .addComponent(JB_siguiente)
-                    .addComponent(JB_pausa))
+                    .addComponent(JB_pausa)
+                    .addComponent(JB_aleatorio))
                 .addGap(0, 42, Short.MAX_VALUE))
         );
 
@@ -274,15 +294,100 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Canciones", JP_canciones);
 
+        JP_canciones1.setBackground(new java.awt.Color(255, 255, 255));
+
+        JT_tablaCancioArtista1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Cancion", "Artista"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        JT_tablaCancioArtista1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane2.setViewportView(JT_tablaCancioArtista1);
+
+        JL_tituloCanciones1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        JL_tituloCanciones1.setText("Biblioteca");
+
+        JB_añadirPlaylist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/SymbolsAddSuma.png"))); // NOI18N
+        JB_añadirPlaylist.setText("Añadir ");
+        JB_añadirPlaylist.setBorderPainted(false);
+        JB_añadirPlaylist.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        JB_añadirPlaylist.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JB_añadirPlaylistActionPerformed(evt);
+            }
+        });
+
+        JCB_playList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "favoritas", "despecho" }));
+        JCB_playList.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JCB_playListActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JP_canciones1Layout = new javax.swing.GroupLayout(JP_canciones1);
+        JP_canciones1.setLayout(JP_canciones1Layout);
+        JP_canciones1Layout.setHorizontalGroup(
+            JP_canciones1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JP_canciones1Layout.createSequentialGroup()
+                .addGap(90, 90, 90)
+                .addGroup(JP_canciones1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 434, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(JP_canciones1Layout.createSequentialGroup()
+                        .addGroup(JP_canciones1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(JCB_playList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JL_tituloCanciones1))
+                        .addGap(482, 482, 482)
+                        .addComponent(JB_añadirPlaylist)
+                        .addGap(27, 27, 27)))
+                .addContainerGap(228, Short.MAX_VALUE))
+        );
+        JP_canciones1Layout.setVerticalGroup(
+            JP_canciones1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_canciones1Layout.createSequentialGroup()
+                .addContainerGap(37, Short.MAX_VALUE)
+                .addGroup(JP_canciones1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_canciones1Layout.createSequentialGroup()
+                        .addComponent(JL_tituloCanciones1)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JP_canciones1Layout.createSequentialGroup()
+                        .addComponent(JB_añadirPlaylist)
+                        .addGap(1, 1, 1)))
+                .addComponent(JCB_playList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(9, 9, 9)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+        );
+
         javax.swing.GroupLayout JP_bibliotecaLayout = new javax.swing.GroupLayout(JP_biblioteca);
         JP_biblioteca.setLayout(JP_bibliotecaLayout);
         JP_bibliotecaLayout.setHorizontalGroup(
             JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1021, Short.MAX_VALUE)
+            .addGroup(JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(JP_bibliotecaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(JP_canciones1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         JP_bibliotecaLayout.setVerticalGroup(
             JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 487, Short.MAX_VALUE)
+            .addGroup(JP_bibliotecaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(JP_bibliotecaLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(JP_canciones1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Biblioteca", JP_biblioteca);
@@ -341,6 +446,72 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JB_eliminarListaActionPerformed
 
+    private void JB_añadirPlaylistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_añadirPlaylistActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_añadirPlaylistActionPerformed
+
+    private void JCB_playListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JCB_playListActionPerformed
+        verContenidoTxtPlaylist();
+    }//GEN-LAST:event_JCB_playListActionPerformed
+
+    private void JB_aleatorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JB_aleatorioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JB_aleatorioActionPerformed
+
+    public void verContenidoTxtPlaylist() {
+        DefaultTableModel model = (DefaultTableModel) JT_tablaCancioArtista1.getModel();
+        model.setRowCount(0);
+
+        String nombrePlaylist = getNombrePlaylistSeleccionada().toLowerCase().replace(" ", "_").replace("ñ", "n");
+        String filePath = "src/main/resources/" + nombrePlaylist + ".txt";
+
+        File file = new File(filePath);
+        if (!file.exists()) {
+            System.out.println("File not found: " + filePath);
+            return;
+        }
+
+        try (BufferedReader lector = new BufferedReader(new FileReader(filePath))) {
+            String linea;
+            while ((linea = lector.readLine()) != null) {
+                String[] datos = linea.split(",");
+                if (datos.length >= 3) {
+                    String artista = datos[0];
+                    String titulo = datos[1];
+                    String ruta = datos[2];
+                    model.addRow(new Object[]{titulo, artista, ruta});
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+     public String getNombrePlaylistSeleccionada() {
+        return JCB_playList.getSelectedItem().toString();
+    }
+
+    public String getArtistaCancion(Mp3File mp3file) {
+        if (mp3file.hasId3v1Tag()) {
+            return mp3file.getId3v1Tag().getArtist();
+        } else if (mp3file.hasId3v2Tag()) {
+            return mp3file.getId3v2Tag().getArtist();
+        }
+        return "Artista desconocido";
+    }
+
+    public String getTituloCancion(Mp3File mp3file) {
+        if (mp3file.hasId3v1Tag()) {
+            return mp3file.getId3v1Tag().getTitle();
+        } else if (mp3file.hasId3v2Tag()) {
+            return mp3file.getId3v2Tag().getTitle();
+        }
+        return "Titulo desconocido";
+    }
+
+    public String getRutaCancion(File archivoMp3Actual) {
+        return archivoMp3Actual.getAbsolutePath();
+    }
     //metodos para enviar todo al controlador
     /**
      * metodo que retorna la cancion a buscar con String para usurla en el
@@ -404,7 +575,7 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
         return -1;
     }
 
-    public String getNombreImagenABuscar() {
+    public String getNombreCancionABuscar() {
         return JTF_BuscaCanciones.getText().trim();
     }
 
@@ -443,6 +614,9 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
         JB_añadirCancion.setActionCommand("anadir");
         JB_añadirCancion.addActionListener(listener);
+        
+        JB_añadirPlaylist.setActionCommand("anadirPlayList");
+        JB_añadirPlaylist.addActionListener(listener);
 
         JB_buscarCancion.setActionCommand("buscar");
         JB_buscarCancion.addActionListener(listener);
@@ -539,23 +713,30 @@ public class Vista_ReproductorMusica extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JB_aleatorio;
     private javax.swing.JButton JB_anterior;
     private javax.swing.JButton JB_añadirCancion;
+    private javax.swing.JButton JB_añadirPlaylist;
     private javax.swing.JButton JB_buscarCancion;
     private javax.swing.JButton JB_eliminarCancion;
     private javax.swing.JButton JB_eliminarLista;
     private javax.swing.JButton JB_pausa;
     private javax.swing.JButton JB_play;
     private javax.swing.JButton JB_siguiente;
+    private javax.swing.JComboBox<String> JCB_playList;
     private javax.swing.JSlider JL_progresoMusica;
     private javax.swing.JLabel JL_tituloCanciones;
+    private javax.swing.JLabel JL_tituloCanciones1;
     private javax.swing.JPanel JP_biblioteca;
     private javax.swing.JPanel JP_canciones;
+    private javax.swing.JPanel JP_canciones1;
     private javax.swing.JTextField JTF_BuscaCanciones;
     private javax.swing.JTable JT_tablaCancioArtista;
+    private javax.swing.JTable JT_tablaCancioArtista1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }

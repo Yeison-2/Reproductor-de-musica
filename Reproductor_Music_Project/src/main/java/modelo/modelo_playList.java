@@ -5,15 +5,17 @@
  */
 package modelo;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  *
  * @author Felipe
@@ -29,7 +31,7 @@ public class modelo_playList {
         this.idCounter = getIdMaximoDelTxt() + 1;
         top = null;
         this.size = 0;
-        cargarCancionesDesdeArchivo(); // Cargar canciones desde el archivo
+
     }
 
     //metodo para verificar si la lista de canciones esta vacia
@@ -226,31 +228,32 @@ public class modelo_playList {
         }
     }
 
-    /**
-     * Metodo que utiiza un
-     *
-     * @param nombre
-     * @return
-     */
+    // Método para eliminar duplicados
+    public Cancion[] eliminarDuplicados(Cancion[] canciones) {
+        Map<String, Cancion> uniqueCanciones = new LinkedHashMap<>();
+        for (Cancion cancion : canciones) {
+            uniqueCanciones.putIfAbsent(cancion.getTitulo(), cancion);
+        }
+        return uniqueCanciones.values().toArray(new Cancion[0]);
+    }
+
+    // Método para buscar canciones por nombre
     public Cancion[] buscarCancionPorNombre(String nombre) {
         int maxResults = 100; // Define a maximum number of results to avoid excessive memory usage
-        Cancion[] resultados = new Cancion[maxResults];
-        int count = 0;
+        List<Cancion> resultados = new ArrayList<>();
         Cancion actual = top;
         Pattern pattern = Pattern.compile(".*" + Pattern.quote(nombre) + ".*", Pattern.CASE_INSENSITIVE);
 
-        while (actual != null && count < maxResults) {
+        while (actual != null && resultados.size() < maxResults) {
             Matcher matcher = pattern.matcher(actual.titulo);
             if (matcher.matches()) {
-                resultados[count++] = actual;
+                resultados.add(actual);
             }
             actual = actual.siguiente;
         }
 
-        // Resize the array to the actual number of results
-        Cancion[] resultadosFinales = new Cancion[count];
-        System.arraycopy(resultados, 0, resultadosFinales, 0, count);
-        return resultadosFinales;
+        Cancion[] resultadosArray = resultados.toArray(new Cancion[0]);
+        return eliminarDuplicados(resultadosArray);
     }
 
     public Cancion buscarCancionPorId(int id) {

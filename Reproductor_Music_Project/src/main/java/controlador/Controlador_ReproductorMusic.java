@@ -11,10 +11,12 @@ import java.awt.event.ActionListener;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import modelo.Cancion;
 import modelo.Modelo_Reproductor;
 import modelo.modelo_playList;
+import vista.Vista_BuscarCancion;
 import vista.Vista_ReproductorMusica;
 import vista.vista_playList;
 
@@ -27,18 +29,29 @@ public class Controlador_ReproductorMusic implements ActionListener {
     private modelo_playList playlist;
     private Vista_ReproductorMusica view;
     private Modelo_Reproductor reproductor;
+    private Vista_BuscarCancion viewBuscar;
+
+    private modelo_playList playlistFavoritas;
+    private modelo_playList playlistFinDeAno;
+    private modelo_playList playlistDespecho;
 
     public Controlador_ReproductorMusic(modelo_playList playlist, Vista_ReproductorMusica view) {
         this.playlist = playlist;
         this.view = view;
-        this.reproductor = new Modelo_Reproductor(playlist,view.getSlider());
+        this.reproductor = new Modelo_Reproductor(playlist, view.getSlider());
         this.view.addListener(this);
         this.view.addAbrirArchivoListener(new AbrirArchivoListener());
+        this.viewBuscar = new Vista_BuscarCancion(this);
+
+        this.playlistFavoritas = new modelo_playList();
+        this.playlistFinDeAno = new modelo_playList();
+        this.playlistDespecho = new modelo_playList();
 
     }
 
     public void iniciar() {
         view.setVisible(true);
+        playlist.cargarCancionesDesdeArchivo();
 
     }
 
@@ -50,18 +63,64 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
     }
 
+    public Cancion getCancionporId(int id) {
+        return playlist.buscarCancionPorId(id);
+    }
+
+    public void reproducirCancion(int id) {
+        playlist.cargarCancionesDesdeArchivo();
+        Cancion cancion = getCancionporId(id);
+        if (cancion != null) {
+            reproductor.reproducir(cancion);
+        } else {
+            view.mostrartraMensaje("No se encontró la canción con el ID especificado.");
+        }
+    }
+
+    public void agregarCancionAPlaylist(String nombrePlaylist, String artista, String titulo, String ruta) {
+        switch (nombrePlaylist.toLowerCase()) {
+            case "favoritas":
+                playlistFavoritas.agregarCancion(artista, titulo, ruta);
+                guardarCancionEnArchivo("favoritas", artista, titulo, ruta);
+                view.mostrartraMensaje("Canción " + titulo + " agregada a la playlist Favoritas");
+                break;
+            case "fin de año":
+                playlistFinDeAno.agregarCancion(artista, titulo, ruta);
+                guardarCancionEnArchivo("fin_de_ano", artista, titulo, ruta);
+                view.mostrartraMensaje("Canción " + titulo + " agregada a la playlist Fin de Año");
+                break;
+            case "despecho":
+                playlistDespecho.agregarCancion(artista, titulo, ruta);
+                guardarCancionEnArchivo("despecho", artista, titulo, ruta);
+                view.mostrartraMensaje("Canción " + titulo + " agregada a la playlist Despecho");
+                break;
+            default:
+                view.mostrartraMensaje("Nombre de playlist inválido");
+                break;
+        }
+    }
+
+    private void guardarCancionEnArchivo(String nombrePlaylist, String artista, String titulo, String ruta) {
+        try (BufferedWriter escritor = new BufferedWriter(new FileWriter("src/main/resources/" + nombrePlaylist + ".txt", true))) {
+            escritor.write(artista + "," + titulo + "," + ruta);
+            escritor.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         //al finalisar se puede colocar esto en un try catch
         switch (e.getActionCommand()) {
             case "play":
-                 playlist.cargarCancionesDesdeArchivo();
+                playlist.cargarCancionesDesdeArchivo();
                 reproductor.reproducir(getCancionporId());
                 break;
             case "siguiente":
                 reproductor.siguiente();
-                
+
                 break;
             case "anterior":
                 reproductor.anterior();
@@ -73,8 +132,7 @@ public class Controlador_ReproductorMusic implements ActionListener {
                 reproductor.pausar();
                 int id = view.getIdCancion(view.getCancionSeleccionadaTabla());
                 if (id != -1) {
-                    if (playlist.eliminarCancion(id)) 
-                    {
+                    if (playlist.eliminarCancion(id)) {
                         view.mostrartraMensaje("Canción eliminada con éxito.");
 
                     } else {
@@ -93,30 +151,48 @@ public class Controlador_ReproductorMusic implements ActionListener {
 
                 break;
 
+            case "anadirPlayList":
+               String nombrePlaylist = view.getNombrePlaylistSeleccionada();
+                File[] archivosMp3 = view.abrirArchivoMp3();
+                if (archivosMp3 != null) {
+                    for (File archivoMp3Actual : archivosMp3) {
+                        try {
+                            Mp3File mp3file = new Mp3File(archivoMp3Actual);
+                            String artista = view.getArtistaCancion(mp3file);
+                            String titulo = view.getTituloCancion(mp3file);
+                            String ruta = view.getRutaCancion(archivoMp3Actual);
+                            agregarCancionAPlaylist(nombrePlaylist, artista, titulo, ruta);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                }
+                view.verContenidoTxtPlaylist();
+
+                break;
             case "buscar":
-                String nombre = view.getNombreImagenABuscar();
+                String nombre = view.getNombreCancionABuscar();
                 Cancion[] canciones = playlist.buscarCancionPorNombre(nombre);
                 if (canciones.length > 0) {
-                    for (Cancion cancion : canciones) {
-                        view.mostrartraMensaje("Canción encontrada: " + cancion.getTitulo() + " - " + cancion.getArtista());
-                    }
+                    viewBuscar.mostrarResultadosBusqueda(canciones);
+                    viewBuscar.setVisible(true);
                 } else {
                     view.mostrartraMensaje("Canción no encontrada.");
                 }
                 break;
-                
-           case "eliminar lista cancion":
+
+            case "eliminar lista cancion":
                 reproductor.pausar();
-            try {
-                playlist.eliminarListaCancion(); // Llamada al método que elimina todas las canciones
-                view.mostrartraMensaje("Todas las canciones han sido eliminadas.");
-            } catch (RuntimeException ex) {
-                view.mostrartraMensaje(ex.getMessage()); // Muestra el mensaje de error si la lista está vacía
-            }
-             playlist.mostrarPlayList();
+                try {
+                    playlist.eliminarListaCancion(); // Llamada al método que elimina todas las canciones
+                    view.mostrartraMensaje("Todas las canciones han sido eliminadas.");
+                } catch (RuntimeException ex) {
+                    view.mostrartraMensaje(ex.getMessage()); // Muestra el mensaje de error si la lista está vacía
+                }
+                playlist.mostrarPlayList();
                 view.verContenidoTxt();
-            break;
-                
+                break;
+
             default:
                 throw new AssertionError("Comando no reconocido: " + e.getActionCommand());
 
